@@ -28,6 +28,7 @@ test-driver
 *.o
 *.lo
 *.la
+*.a
 .deps
 .libs
 adplug.pc
