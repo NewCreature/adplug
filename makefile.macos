@@ -1,0 +1,44 @@
+# MacOS Environment Setup
+MACOSX_ARCHITECURES = -arch i386 -arch x86_64
+MACOSX_SYS_ROOT = -isysroot  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+MACOSX_MIN_VERSION = -mmacosx-version-min=10.6
+MACOSX_COMPILER_SETTINGS = -I/usr/local/include
+MACOSX_LINKER_SETTINGS = -L/usr/local/lib
+MACOSX_CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc
+MACOSX_CXX = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++
+MACOSX_PREFIX = /usr/local
+
+CC = $(MACOSX_CC)
+CXX = $(MACOSX_CXX)
+CFLAGS = -Dstricmp=strcasecmp -Isrc -O2 $(MACOSX_ARCHITECURES) $(MACOSX_COMPILER_SETTINGS) $(MACOSX_SYS_ROOT) $(MACOSX_MIN_VERSION)
+CXXFLAGS = $(CFLAGS)
+
+ADPLUG_OBJECTS = src/adlibemu.o src/debug.o src/fmopl.o src/nukedopl.o src/a2m.o src/adl.o src/adlib.o src/adplug.o src/adtrack.o src/amd.o src/analopl.o src/bam.o src/bmf.o src/cff.o src/cmf.o src/cmfmcsop.o src/d00.o src/database.o src/dfm.o src/diskopl.o src/dmo.o src/dro2.o src/dro.o src/dtm.o src/emuopl.o src/flash.o src/fmc.o src/fprovide.o src/got.o src/herad.o src/hsc.o src/hsp.o src/hybrid.o src/hyp.o src/imf.o src/jbm.o src/ksm.o src/lds.o src/mad.o src/mdi.o src/mid.o src/mkj.o src/msc.o src/mtk.o src/mus.o src/nemuopl.o src/player.o  src/players.o src/protrack.o src/psi.o src/rad.o src/rat.o src/raw.o src/realopl.o src/rix.o  src/rol.o src/s3m.o src/sa2.o src/sng.o src/sop.o src/surroundopl.o src/temuopl.o src/u6m.o  src/vgm.o src/woodyopl.o src/xad.o src/xsm.o
+
+libadplug.a: src/version.h $(ADPLUG_OBJECTS)
+	-ar rs libadplug.a $(ADPLUG_OBJECTS)
+
+src/version.h:
+	echo '#define ADPLUG_VERSION "2.3"' > src/version.h
+
+clean:
+	rm -rf $(ADPLUG_OBJECTS) src/version.h
+
+install: libadplug.a
+	cp libadplug.a $(MACOSX_PREFIX)/lib
+	mkdir -p $(MACOSX_PREFIX)/include/adplug
+	cp src/adplug.h $(MACOSX_PREFIX)/include/adplug
+	cp src/emuopl.h $(MACOSX_PREFIX)/include/adplug
+	cp src/kemuopl.h $(MACOSX_PREFIX)/include/adplug
+	cp src/player.h $(MACOSX_PREFIX)/include/adplug
+	cp src/silentopl.h $(MACOSX_PREFIX)/include/adplug
+	cp src/database.h $(MACOSX_PREFIX)/include/adplug
+	cp src/fmopl.h $(MACOSX_PREFIX)/include/adplug
+	cp src/nemuopl.h $(MACOSX_PREFIX)/include/adplug
+	cp src/players.h $(MACOSX_PREFIX)/include/adplug
+	cp src/surroundopl.h $(MACOSX_PREFIX)/include/adplug
+	cp src/diskopl.h $(MACOSX_PREFIX)/include/adplug
+	cp src/fprovide.h $(MACOSX_PREFIX)/include/adplug
+	cp src/opl.h $(MACOSX_PREFIX)/include/adplug
+	cp src/realopl.h $(MACOSX_PREFIX)/include/adplug
+	cp src/wemuopl.h $(MACOSX_PREFIX)/include/adplug
