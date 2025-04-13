@@ -1,0 +1,38 @@
+# Linux Environment Setup
+LINUX_PREFIX = /usr/local
+
+CC = gcc
+CXX = g++
+CFLAGS = -Dstricmp=strcasecmp -Isrc -I/usr/local/include/binio -O2
+CXXFLAGS = $(CFLAGS)
+
+ADPLUG_OBJECTS = src/adlibemu.o src/debug.o src/fmopl.o src/nukedopl.o src/a2m.o src/adl.o src/adplug.o src/adtrack.o src/amd.o src/analopl.o src/bam.o src/bmf.o src/cff.o src/cmf.o src/cmfmcsop.o src/coktel.o src/composer.o src/d00.o src/database.o src/dfm.o src/diskopl.o src/dmo.o src/dro2.o src/dro.o src/dtm.o src/emuopl.o src/flash.o src/fmc.o src/fprovide.o src/got.o src/herad.o src/hsc.o src/hsp.o src/hybrid.o src/hyp.o src/imf.o src/jbm.o src/ksm.o src/lds.o src/mad.o src/mdi.o src/mid.o src/mkj.o src/msc.o src/mtk.o src/mus.o src/nemuopl.o src/player.o  src/players.o src/protrack.o src/psi.o src/rad2.o src/rat.o src/raw.o src/realopl.o src/rix.o  src/rol.o src/s3m.o src/sa2.o src/sng.o src/sop.o src/surroundopl.o src/temuopl.o src/u6m.o  src/vgm.o src/woodyopl.o src/xad.o src/xsm.o
+
+libadplug.a: src/version.h $(ADPLUG_OBJECTS)
+	-ar rs libadplug.a $(ADPLUG_OBJECTS)
+
+src/version.h:
+	echo '#define ADPLUG_VERSION "2.3"' > src/version.h
+
+clean:
+	rm -rf $(ADPLUG_OBJECTS) src/version.h
+
+install: libadplug.a
+	cp libadplug.a $(LINUX_PREFIX)/lib
+	mkdir -p $(LINUX_PREFIX)/include/adplug
+	cp src/adplug.h $(LINUX_PREFIX)/include/adplug
+	cp src/emuopl.h $(LINUX_PREFIX)/include/adplug
+	cp src/kemuopl.h $(LINUX_PREFIX)/include/adplug
+	cp src/player.h $(LINUX_PREFIX)/include/adplug
+	cp src/silentopl.h $(LINUX_PREFIX)/include/adplug
+	cp src/database.h $(LINUX_PREFIX)/include/adplug
+	cp src/fmopl.h $(LINUX_PREFIX)/include/adplug
+	cp src/nemuopl.h $(LINUX_PREFIX)/include/adplug
+	cp src/players.h $(LINUX_PREFIX)/include/adplug
+	cp src/surroundopl.h $(LINUX_PREFIX)/include/adplug
+	cp src/diskopl.h $(LINUX_PREFIX)/include/adplug
+	cp src/fprovide.h $(LINUX_PREFIX)/include/adplug
+	cp src/opl.h $(LINUX_PREFIX)/include/adplug
+	cp src/realopl.h $(LINUX_PREFIX)/include/adplug
+	cp src/wemuopl.h $(LINUX_PREFIX)/include/adplug
+

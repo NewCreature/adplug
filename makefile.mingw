@@ -1,0 +1,36 @@
+MINGW_PREFIX = C:\\MinGW
+
+CC = gcc
+CXX = g++
+CFLAGS = -Isrc -IC:\\MinGW\\include\\binio -O2
+CXXFLAGS = $(CFLAGS)
+
+ADPLUG_OBJECTS = src\\adlibemu.o src\\debug.o src\\fmopl.o src\\nukedopl.o src\\a2m.o src\\adl.o src\\adlib.o src\\adplug.o src\\adtrack.o src\\amd.o src\\analopl.o src\\bam.o src\\bmf.o src\\cff.o src\\cmf.o src\\cmfmcsop.o src\\d00.o src\\database.o src\\dfm.o src\\diskopl.o src\\dmo.o src\\dro2.o src\\dro.o src\\dtm.o src\\emuopl.o src\\flash.o src\\fmc.o src\\fprovide.o src\\got.o src\\herad.o src\\hsc.o src\\hsp.o src\\hybrid.o src\\hyp.o src\\imf.o src\\jbm.o src\\ksm.o src\\lds.o src\\mad.o src\\mdi.o src\\mid.o src\\mkj.o src\\msc.o src\\mtk.o src\\mus.o src\\nemuopl.o src\\player.o  src\\players.o src\\protrack.o src\\psi.o src\\rad.o src\\rat.o src\\raw.o src\\realopl.o src\\rix.o  src\\rol.o src\\s3m.o src\\sa2.o src\\sng.o src\\sop.o src\\surroundopl.o src\\temuopl.o src\\u6m.o  src\\vgm.o src\\woodyopl.o src\\xad.o src\\xsm.o
+
+libadplug.a: src\\version.h $(ADPLUG_OBJECTS)
+	ar rs libadplug.a $(ADPLUG_OBJECTS)
+
+src\\version.h:
+	echo #define ADPLUG_VERSION "2.3" > src\\version.h
+
+clean:
+	del /q $(ADPLUG_OBJECTS) src\\version.h
+
+install: libadplug.a
+	copy /y libadplug.a $(MINGW_PREFIX)\\lib
+	if not exist "$(MINGW_PREFIX)\\include\\adplug" md $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\adplug.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\emuopl.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\kemuopl.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\player.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\silentopl.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\database.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\fmopl.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\nemuopl.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\players.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\surroundopl.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\diskopl.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\fprovide.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\opl.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\realopl.h $(MINGW_PREFIX)\\include\\adplug
+	copy /y src\\wemuopl.h $(MINGW_PREFIX)\\include\\adplug

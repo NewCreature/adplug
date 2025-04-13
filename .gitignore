@@ -29,6 +29,7 @@ test-driver
 *.o
 *.lo
 *.la
+*.a
 *.swp
 *.test
 .cvsignore
